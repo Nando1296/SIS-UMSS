@@ -2,8 +2,12 @@ package org.umss.SIS_UMSS;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
-@SpringBootApplication
+import javax.sql.DataSource;
+
+@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
 public class SisUmssApplication {
 
 	public static void main(String[] args) {
