@@ -1,21 +1,32 @@
 package org.umss.SIS_UMSS.Models;
 
-public class University {
+import java.util.Date;
 
-    private Long id;
+public class University {
+    private Integer id;
     private String uuid;
-    private String code;
     private String name;
-    public University(String code, String name) {
+    private String code;
+    private Date createdDate;
+
+
+
+    public University(Integer id, String uuid, String name, String code, Date createdDate) {
+        this.id = id;
+        this.uuid = uuid;
         this.code = code;
-        this.name= name;
+        this.name = name;
+        this.createdDate = createdDate;
     }
 
-    public Long getId() {
+    public University() {
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -27,6 +38,14 @@ public class University {
         this.uuid = uuid;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getCode() {
         return code;
     }
@@ -35,11 +54,11 @@ public class University {
         this.code = code;
     }
 
-    public String getName() {
-        return name;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 }
