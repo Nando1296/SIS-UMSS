@@ -6,45 +6,34 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class University {
+public class Faculty {
     @Id
     @GeneratedValue
     private Integer id;
-    @Column(updatable=false, nullable=false)
+    @Column(updatable = false, nullable = false)
     private String uuid;
     private String name;
     private String code;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private University university;
     @CreatedDate
     private Date createdDate;
     @LastModifiedDate
-    private Date modifiedDate;
-    @OneToMany(mappedBy = "university")
-    private List<Faculty> faculties;
+    private Date lastModifiedDate;
 
-
-
-    public University(Integer id, String uuid, String name, String code, Date createdDate) {
+    public Faculty(Integer id, String uuid, String name, String code, Date createdDate) {
         this.id = id;
         this.uuid = uuid;
-        this.code = code;
         this.name = name;
+        this.code = code;
         this.createdDate = createdDate;
     }
 
-    public University() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public Faculty() {
     }
 
     public String getUuid() {
@@ -79,16 +68,32 @@ public class University {
         this.createdDate = createdDate;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public University getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(University university) {
+        this.university = university;
+    }
+
     @PrePersist
     public void initializeUuid(){
         this.setUuid(UUID.randomUUID().toString());
     }
 
-    public List<Faculty> getFaculties() {
-        return faculties;
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
-    public void setFaculties(List<Faculty> faculties) {
-        this.faculties = faculties;
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 }

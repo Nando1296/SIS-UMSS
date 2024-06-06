@@ -6,7 +6,7 @@ public class SisExceptionResponse {
     private Date timeStamp;
     private String message;
 
-    public SisExceptionResponse(Date timeStamp, String message) {
+    public SisExceptionResponse(Date timeStamp, String message, String description) {
         this.timeStamp = timeStamp;
         this.message = message;
     }

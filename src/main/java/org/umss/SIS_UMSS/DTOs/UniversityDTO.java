@@ -1,9 +1,18 @@
 package org.umss.SIS_UMSS.DTOs;
 
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+
 public class UniversityDTO {
 
     private String uuid;
+    @NotNull
+    @Size(min = 2, max = 20)
     private String code;
+    @NotNull
+    @Size(min = 2, max = 200)
     private String name;
 
     public UniversityDTO(String uuid, String code, String name) {
