@@ -1,13 +1,8 @@
 package org.umss.SIS_UMSS.Controllers;
 
-import com.fasterxml.jackson.databind.MappingJsonFactory;
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 import org.umss.SIS_UMSS.DTOs.FacultyDTO;
 import org.umss.SIS_UMSS.DTOs.UniversityDTO;
@@ -39,16 +34,13 @@ public class UniversityController {
     }
 
     @PutMapping("/{uuid}")
-    public UniversityDTO update(@PathVariable String uuid, @RequestBody UniversityDTO universityDTO){
-        return new UniversityDTO(uuid,"umss","universidad mayor de san simon");
+    public UniversityDTO update(@RequestBody UniversityDTO universityDTO){
+        return universityService.updateUniversity(universityDTO);
     }
-
-
 
     @DeleteMapping("/{uuid}")
     public UniversityDTO deleteUniversity(@PathVariable String uuid){
-        UniversityDTO universityDTO = new UniversityDTO(uuid,"UMSS", "Universidad Mayor De San Simón");
-        return universityDTO;
+        return universityService.deleteUniversity(uuid);
     }
 
     @GetMapping("/{universityUuid}/faculties")
