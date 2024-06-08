@@ -1,32 +1,27 @@
 package org.umss.SIS_UMSS.Models;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "UPDATE faculty SET deleted = true WHERE id = ?")
-@Where(clause = "deleted = false")
-public class Faculty {
+public class Subject {
     @Id
     @GeneratedValue
     private Integer id;
     @Column(updatable=false, nullable=false, unique = true, length=36)
     private String uuid;
-    @Column(updatable=false, nullable=false, length=200)
+    @Column(nullable=false, length=200)
     private String name;
-    @Column(updatable=false, nullable=false, length=10)
+    @Column(nullable=false, length=10)
     private String code;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private University university;
+    @Column(nullable=true, length=255)
+    private String description;
+    @ManyToMany(mappedBy = "subjects")
+    private List<Professor> professors;
     @CreatedDate
     @Column (updatable=false, columnDefinition = "timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
@@ -35,18 +30,16 @@ public class Faculty {
     private Date lastModifiedDate;
     @Column(columnDefinition = "BOOLEAN NOT NULL DEFAULT '0'")
     private boolean deleted;
-    @OneToMany(mappedBy = "faculty", cascade = CascadeType.REMOVE)
-    private List<Department> departments;
 
-    public Faculty(Integer id, String uuid, String name, String code, Date createdDate) {
-        this.id = id;
-        this.uuid = uuid;
-        this.name = name;
-        this.code = code;
-        this.createdDate = createdDate;
+    public Subject() {
     }
 
-    public Faculty() {
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getUuid() {
@@ -55,6 +48,14 @@ public class Faculty {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getName() {
@@ -73,33 +74,20 @@ public class Faculty {
         this.code = code;
     }
 
+    public List<Professor> getProfessors() {
+        return professors;
+    }
+
+    public void setProfessors(List<Professor> professors) {
+        this.professors = professors;
+    }
+
     public Date getCreatedDate() {
         return createdDate;
     }
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public University getUniversity() {
-        return university;
-    }
-
-    public void setUniversity(University university) {
-        this.university = university;
-    }
-
-    @PrePersist
-    public void initializeUuid(){
-        this.setUuid(UUID.randomUUID().toString());
     }
 
     public Date getLastModifiedDate() {
@@ -116,13 +104,5 @@ public class Faculty {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
-    }
-
-    public List<Department> getDepartments() {
-        return departments;
-    }
-
-    public void setDepartments(List<Department> departments) {
-        this.departments = departments;
     }
 }

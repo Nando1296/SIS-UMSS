@@ -38,6 +38,7 @@ public class University {
 
 
 
+
     public University(Integer id, String uuid, String name, String code, Date createdDate) {
         this.id = id;
         this.uuid = uuid;
